@@ -1,34 +1,20 @@
 // Question: https://www.interviewbit.com/problems/max-sum-contiguous-subarray/
 
 int Solution::maxSubArray(const vector<int> &A) {
-    int sum = 0;
+    int maxSoFar = 0;
     int max = 0;
-    vector<int> SumArray;
-    vector<int> MaxSubSumArray;
 
     for (int a : A)
     {
-        sum+=a;
-        SumArray.push_back(sum);
-    }
-
-    for (int i = 0; i < A.size(); i++)
-    {
-        max = 0;
-        for (int j = 0; j < i; j++)
+        maxSoFar += a;
+        if (maxSoFar < 0)
         {
-            if ((SumArray[i] - SumArray[j] + A[j]) > max)
-            {
-                max = SumArray[i] - SumArray[j] + A[j];
-            }
+            maxSoFar = 0;
         }
-        MaxSubSumArray.push_back(max);
+        else if (maxSoFar > max)
+        {
+            max = maxSoFar;
+        }
     }
-
-    for (int a : MaxSubSumArray)
-    {
-        max = a > max ? a : max;
-    }
-
     return max;
 }
